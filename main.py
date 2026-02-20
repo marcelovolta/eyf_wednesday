@@ -1,34 +1,62 @@
-import pandas as pd
+# Core Python
 import logging
 import os
-import datetime 
+import datetime as dt 
+
+# External libraries
+import pandas as pd
+import polars as pl
+import duckdb
+
+# Modular code
+from src import load_data_pandas, load_data_duckdb, select_amount_cols, select_count_cols, \
+    generate_lags
+
+# Log setup
+os.makedirs('logs', exist_ok=True)
+fecha = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+nombre_log = f'logs/log_{fecha}.log'
+logging.basicConfig(level=logging.DEBUG, 
+    format='%(asctime)s - %(levelname)s - %(name)s - %(lineno)d - %(message)s', \
+        datefmt='%Y-%m-%d %H:%M:%S', 
+    handlers = [logging.FileHandler(nombre_log, mode='w', encoding='utf-8'), \
+                logging.StreamHandler()
+                ]
+            )
+logger = logging.getLogger(__name__)
 
 def main():
     # Setup logging
-    logging.basicConfig(filename='logs/log.txt', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    logging.info("Inicio de Ejecución")
+    
+    logger.info("Start run")
 
     # Load the data from the CSV file
-    logging.info("Cargando datos...")
-    data = pd.read_csv('data/competencia_01_crudo.csv')
+    archivo_de_datos_02 = 'data/competencia_02_crudo.csv.gz'
+    archivo_de_datos_03 = 'data/competencia_03_crudo.csv.gz'
+    data = load_data_pandas([archivo_de_datos_02, archivo_de_datos_03])
+    # data = load_data_pandas([archivo_de_datos_03])
 
+    # data = load_data_duckdb([archivo_de_datos_02, archivo_de_datos_03])
     print(data.head())
-    print("Filas: ", data.shape[0])
-    print("Columnas: ", data.shape[1])
+    print(data.tail())
+    
+    logging.info(f"Rows: {data.shape[0]}")
+    logging.info(f"Columns: {data.shape[1]}")
+    
+    amount_cols = select_amount_cols(data)
+    count_cols = select_count_cols(data)
 
+    logging.info(f"Length of amount column list: {len(amount_cols)}")
+    logging.info(f"Length of count column list: {len(count_cols)}")
 
-    # Logs by hand
-    # with open('logs/log.txt', 'w') as f:
-    #     f.write(logging.info("Fin de Ejecución"))
-    #     f.write("Filas: ", data.shape[0])
-    #     f.write("Columnas: ", data.shape[1])
-    #     f.write("Datos: ", data.head())
-    #     f.write("Fin de Ejecución")
-    #     f.write("Fin de Ejecución")
+    cols_for_lag = amount_cols + count_cols
+    
+    data = generate_lags(data, cols_for_lag, [1, 2, 3, 6, 12], True)
 
-    logging.info(f"Filas: {data.shape[0]}")
-    logging.info(f"Columnas: {data.shape[1]}")
-    logging.info("Fin de Ejecución")
+    logging.info("End run")
+
+    
+
 
 '''
 This is the main function that will be called when the script is run.
