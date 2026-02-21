@@ -1,0 +1,39 @@
+
+EXPERIMENT_NAME: "001"
+SEEDS:
+  - 710633
+GAIN_CORRECT_PREDICTION: 780000
+COST_MARKETING_ACTION: 20000
+API_KEY: ${API_KEY}
+
+competencia01:
+  DATA_PATHS:
+    - "../data/competencia_01.csv.gz"
+  TRAIN_MONTHS:
+    - 202102
+  TEST_MONTHS:
+    - 202103
+  VALIDATION_MONTHS:
+    - 202104
+
+competencia02:
+  DATA_PATHS: 
+    - "../data/competencia_02_crudo.csv.gz"
+  TRAIN_MONTHS:
+    - 
+  TEST_MONTHS:
+    - 
+  VALIDATION_MONTHS:
+    - 
+
+competencia03:
+  DATA_PATHS: 
+    - "../data/competencia_02_crudo.csv.gz"
+    - "../data/competencia_03_crudo.csv.gz"
+  TRAIN_MONTHS:
+    - 
+  TEST_MONTHS:
+    - 
+  VALIDATION_MONTHS:
+    - 
+
