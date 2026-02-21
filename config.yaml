@@ -1,10 +1,21 @@
 
 EXPERIMENT_NAME: "001"
+LOGGING_CONFIG: > 
+  level=logging.DEBUG, 
+  format='%(asctime)s - %(levelname)s - %(name)s - %(lineno)d - %(message)s', 
+  datefmt='%Y-%m-%d %H:%M:%S', 
+  handlers = [logging.FileHandler(nombre_log, mode='w', encoding='utf-8'), 
+  logging.StreamHandler()]
+
 SEEDS:
-  - 710633
+  - 611033
+  - 569011
+  - 347759
+  - 537769
+  - 475877
 GAIN_CORRECT_PREDICTION: 780000
 COST_MARKETING_ACTION: 20000
-API_KEY: ${API_KEY}
+
 
 competencia01:
   DATA_PATHS:

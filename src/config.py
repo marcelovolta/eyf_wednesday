@@ -1,36 +1,36 @@
-from dataclasses import asdict
 import yaml
 import logging
 import os
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
 
 
 config_path = "config.yaml"
 logger = logging.getLogger(__name__)
 
+class SecretSettings(BaseSettings):
+    '''
+    Use to set secret settings: Passwords, API keys and the like
+    Non-sensitive settings go into the YAML file
+    Declare one property per secret setting to get from the .env file
+    '''
+    api_key: str
 
-# 2. Función que reemplaza ${VAR}
-def replace_env_vars(obj):
-    if isinstance(obj, dict):
-        return {k: replace_env_vars(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [replace_env_vars(i) for i in obj]
-    elif isinstance(obj, str):
-        return os.path.expandvars(obj)   # <- aquí ocurre la magia
-    else:
-        return obj
+    class Config:
+        env_file = ".env"
 
-load_dotenv()    
+secret_settings = SecretSettings()
+API_KEY = secret_settings.api_key
+
 try:
     with open(config_path, "r") as f:
-        _cfgGeneral = yaml.safe_load(f)
-        _cfgGeneral = replace_env_vars(_cfgGeneral)
         
+        _cfgGeneral = yaml.safe_load(f)
         EXPERIMENT_NAME = _cfgGeneral.get("EXPERIMENT_NAME")
+        LOGGING_CONFIG = _cfgGeneral.get("LOGGING_CONFIG")
         GAIN_CORRECT_PREDICTION = _cfgGeneral.get("GAIN_CORRECT_PREDICTION")
         COST_MARKETING_ACTION = _cfgGeneral.get("COST_MARKETING_ACTION")
-        API_KEY = _cfgGeneral.get("API_KEY")
+        
         _cfgCompetencia01 = _cfgGeneral.get("competencia03")
         DATA_PATHS = _cfgCompetencia01.get("DATA_PATHS")
     

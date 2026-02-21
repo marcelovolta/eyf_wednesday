@@ -10,10 +10,6 @@ import duckdb
 
 # Modular code
 from src import * 
-from src.config import *
-
-#load_data_pandas, load_data_duckdb, select_amount_cols, select_count_cols, \
-#    generate_lags
 
 # Log setup
 os.makedirs('logs', exist_ok=True)
@@ -21,21 +17,23 @@ fecha = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
 nombre_log = f'logs/log_{fecha}.log'
 logging.basicConfig(level=logging.DEBUG, 
     format='%(asctime)s - %(levelname)s - %(name)s - %(lineno)d - %(message)s', \
-        datefmt='%Y-%m-%d %H:%M:%S', 
+    datefmt='%Y-%m-%d %H:%M:%S', 
     handlers = [logging.FileHandler(nombre_log, mode='w', encoding='utf-8'), \
-                logging.StreamHandler()
-                ]
-            )
+    logging.StreamHandler()
+    ]
+)
+
 logger = logging.getLogger(__name__)
 
+
 def main():
-    # Setup logging
-    
+
+    # Start logging
     logger.info("Start run")
 
-    print(API_KEY)
-    print(EXPERIMENT_NAME)
-    print(DATA_PATHS)
+    print(f"API Key: {API_KEY}")
+    print(f"Experiment Name: {EXPERIMENT_NAME}")
+    print(f"Data Paths: {DATA_PATHS}")
     return
 
     # Load the data from the CSV file
