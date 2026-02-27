@@ -30,12 +30,7 @@ def main():
 
     # Start logging
     logger.info("Start run")
-
-    print(f"API Key: {API_KEY}")
-    print(f"Experiment Name: {EXPERIMENT_NAME}")
-    print(f"Data Paths: {DATA_PATHS}")
-    return
-
+    
     # Load the data from the CSV file
     archivo_de_datos_02 = 'data/competencia_02_crudo.csv.gz'
     archivo_de_datos_03 = 'data/competencia_03_crudo.csv.gz'
@@ -63,8 +58,6 @@ def main():
     
     data = generate_lags(data, cols_for_lag, [1, 2, 3, 6, 12], True)
 
-    
-    
     logging.info("End run")
 
     
