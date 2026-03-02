@@ -1,12 +1,5 @@
 
 EXPERIMENT_NAME: "001"
-LOGGING_CONFIG: > 
-  level=logging.DEBUG, 
-  format='%(asctime)s - %(levelname)s - %(name)s - %(lineno)d - %(message)s', 
-  datefmt='%Y-%m-%d %H:%M:%S', 
-  handlers = [logging.FileHandler(nombre_log, mode='w', encoding='utf-8'), 
-  logging.StreamHandler()]
-
 SEEDS:
   - 611033
   - 569011
@@ -19,7 +12,7 @@ COST_MARKETING_ACTION: 20000
 
 competencia01:
   DATA_PATHS:
-    - "../data/competencia_01.csv.gz"
+    - "data/competencia_01.csv.gz"
   TRAIN_MONTHS:
     - 202102
   TEST_MONTHS:
@@ -29,7 +22,7 @@ competencia01:
 
 competencia02:
   DATA_PATHS: 
-    - "../data/competencia_02_crudo.csv.gz"
+    - "data/competencia_02_crudo.csv.gz"
   TRAIN_MONTHS:
     - 
   TEST_MONTHS:
@@ -39,8 +32,8 @@ competencia02:
 
 competencia03:
   DATA_PATHS: 
-    - "../data/competencia_02_crudo.csv.gz"
-    - "../data/competencia_03_crudo.csv.gz"
+    - "data/competencia_02_crudo.csv.gz"
+    - "data/competencia_03_crudo.csv.gz"
   TRAIN_MONTHS:
     - 
   TEST_MONTHS:

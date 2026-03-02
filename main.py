@@ -1,5 +1,6 @@
 # Core Python
 import logging
+from operator import ge
 import os
 import datetime as dt 
 
@@ -31,12 +32,30 @@ def main():
     # Start logging
     logger.info("Start run")
     
+    # Get settings from env and yaml
+    API_KEY = config.API_KEY
+    logger.info(
+        f"Bogus API Key just for checking that secrets work: {API_KEY}"
+    )
+    
+    
+    logger.info(
+        f"""
+            Parameters from config - Experiment name: {config.EXPERIMENT_NAME} 
+            Seeds: {config.SEEDS} 
+            Gain of Correct prediction: {config.GAIN_CORRECT_PREDICTION} 
+            Cost of Marketing action: {config.COST_MARKETING_ACTION} 
+            Data Paths: {config.DATA_PATHS} 
+            Train Months: {config.TRAIN_MONTHS} 
+            Test Months: {config.TEST_MONTHS}    
+            Validation Months: {config.VALIDATION_MONTHS}
+            """
+            )
+    
+    
     # Load the data from the CSV file
-    archivo_de_datos_02 = 'data/competencia_02_crudo.csv.gz'
-    archivo_de_datos_03 = 'data/competencia_03_crudo.csv.gz'
-    data = load_data_pandas([archivo_de_datos_02, archivo_de_datos_03])
-    # data = load_data_pandas([archivo_de_datos_03])
-
+    data = load_data_pandas(config.DATA_PATHS)
+    
 
     if data is None: return
     print(data.head())
@@ -56,6 +75,8 @@ def main():
     logging.info(f"Length of count column list: {len(count_cols)}")
     cols_for_lag = amount_cols + count_cols
     
+    data = generate_ternary_class(data)
+    data = convert_ternary_class_to_binary(data, '_clase_ternaria', '_clase_ternaria')
     data = generate_lags(data, cols_for_lag, [1, 2, 3, 6, 12], True)
 
     logging.info("End run")
