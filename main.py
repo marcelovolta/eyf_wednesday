@@ -76,7 +76,7 @@ def main():
     cols_for_lag = amount_cols + count_cols
     
     data = generate_ternary_class(data)
-    data = convert_ternary_class_to_binary(data, '_clase_ternaria', '_clase_ternaria')
+    data = convert_ternary_class_to_binary(data, 'clase_ternaria', 'clase_ternaria')
     data = generate_lags(data, cols_for_lag, [1, 2, 3, 6, 12], True)
 
     logging.info("End run")

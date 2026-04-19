@@ -97,9 +97,9 @@ def generate_ternary_class(df: pd.DataFrame) -> pd.DataFrame:
         f"Ternary class generation complete. Resulting DataFrame has {df_return.shape[1]} columns"
     )
 
-    baja_1 = (df_return['_clase_ternaria']=='BAJA+1').sum()
-    baja_2 = (df_return['_clase_ternaria']=='BAJA+2').sum()
-    continua = (df_return['_clase_ternaria']=='CONTINUA').sum()
+    baja_1 = (df_return['clase_ternaria']=='BAJA+1').sum()
+    baja_2 = (df_return['clase_ternaria']=='BAJA+2').sum()
+    continua = (df_return['clase_ternaria']=='CONTINUA').sum()
     logger.info(
         f"Distribution - BAJA+1: {baja_1}, BAJA+2: {baja_2}, CONTINUA: {continua}"
     )
